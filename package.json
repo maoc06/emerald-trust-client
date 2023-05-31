@@ -1,0 +1,35 @@
+{
+  "name": "emerald-trust-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.18",
+    "@lottiefiles/lottie-player": "^1.7.1",
+    "@walletconnect/web3wallet": "^1.7.5",
+    "@web3modal/ethereum": "^2.4.1",
+    "@web3modal/react": "^2.4.1",
+    "alchemy-sdk": "^2.8.3",
+    "axios": "^1.4.0",
+    "moment": "^2.29.4",
+    "next": "13.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-toastify": "^9.1.3",
+    "viem": "^0.3.24",
+    "wagmi": "^1.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.1",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
+  }
+}
