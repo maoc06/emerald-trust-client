@@ -105,7 +105,7 @@ export default function Home({ ...props }) {
               <p className="text-gray-400">
                 Whether you collect, invest, or admire emeralds, our platform
                 offers a secure space to explore, acquire, and trade these
-                unique digital representations of Earth's coveted treasures.
+                unique digital representations of Earth&#39;s coveted treasures.
               </p>
             </div>
           </div>
