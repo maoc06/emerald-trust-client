@@ -395,7 +395,7 @@ export default function MyNFTs() {
                       <span>
                         <InformationCircleIcon className="cursor-pointer h-5 w-5" />
                       </span>
-                      <span className="text-xs min-w-[232px] md:min-w-[372px] normal-case group-hover:opacity-100 transition-opacity bg-slate-900 p-2 text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 translate-y-2 opacity-0 m-4 mx-auto">
+                      <span className="z-10 text-xs min-w-[232px] md:min-w-[372px] normal-case group-hover:opacity-100 transition-opacity bg-slate-900 p-2 text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 translate-y-2 opacity-0 m-4 mx-auto">
                         Approves the Emerald Trust to transfer the token when
                         another address executes the purchase order.
                       </span>
