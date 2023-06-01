@@ -51,9 +51,11 @@ export default function Marketplace({ ...props }) {
     nftDataStorage = await readContracts({ contracts: multiCallConfig });
     for (let index = 0; index < nftDataStorage.length; index++) {
       const { status, result } = nftDataStorage[index];
-      if (status === "success" && nftListedMetadata[tokenId]) {
+      if (status === "success") {
         tokenId = parseInt(result.tokenId);
-        nftListedMetadata[tokenId]["currPrice"] = formatEther(result.price);
+        if (nftListedMetadata[tokenId]) {
+          nftListedMetadata[tokenId]["currPrice"] = formatEther(result.price);
+        }
       }
     }
 

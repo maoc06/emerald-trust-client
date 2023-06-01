@@ -10,6 +10,7 @@ export default function NFTCard({
   price = "0.0",
   slug,
 }) {
+  if (title === "default title") return null;
   return (
     <Link className="min-w-[316px]" href={`/emerald-nft/${slug}`}>
       <div className="max-w-xs max-h-96 overflow-hidden border rounded-2xl shadow bg-slate-900 border-gray-800 cursor-pointer transform transition duration-300 hover:scale-105">

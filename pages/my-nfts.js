@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import {
   useAccount,
   usePrepareContractWrite,
@@ -19,6 +20,7 @@ import {
   abiNFT,
 } from "../contracts";
 import { ModalEditToken } from "../components";
+import Link from "next/link";
 
 export default function MyNFTs() {
   const ref = useRef(null);
@@ -52,9 +54,10 @@ export default function MyNFTs() {
   });
   const { write: approve, data: tokenApproved } =
     useContractWrite(configApprove);
-  const { isSuccess: isSuccessApproved } = useWaitForTransaction({
-    hash: tokenApproved?.hash,
-  });
+  const { isSuccess: isSuccessApproved, isLoading: isLoadingApprove } =
+    useWaitForTransaction({
+      hash: tokenApproved?.hash,
+    });
 
   // LISTED NFT
   const { config: configListItem } = usePrepareContractWrite({
@@ -72,9 +75,10 @@ export default function MyNFTs() {
   });
   const { write: listItem, data: tokenListing } =
     useContractWrite(configListItem);
-  const { isSuccess: isSuccessListing } = useWaitForTransaction({
-    hash: tokenListing?.hash,
-  });
+  const { isSuccess: isSuccessListing, isLoading: isLoadingListing } =
+    useWaitForTransaction({
+      hash: tokenListing?.hash,
+    });
 
   // CANCEL LIST NFT
   const { config: configCancelListing } = usePrepareContractWrite({
@@ -86,9 +90,10 @@ export default function MyNFTs() {
   });
   const { write: cancelListing, data: tokenCancel } =
     useContractWrite(configCancelListing);
-  const { isSuccess: isSuccessCancel } = useWaitForTransaction({
-    hash: tokenCancel?.hash,
-  });
+  const { isSuccess: isSuccessCancel, isLoading: isLoadingCancel } =
+    useWaitForTransaction({
+      hash: tokenCancel?.hash,
+    });
 
   const getAllsNFTsOwner = async () => {
     setIsLoading(true);
@@ -384,8 +389,17 @@ export default function MyNFTs() {
                   <th scope="col" className="px-6 py-3">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="flex items-center gap-1 px-6 py-3">
                     Approved
+                    <div className="group flex relative">
+                      <span>
+                        <InformationCircleIcon className="cursor-pointer h-5 w-5" />
+                      </span>
+                      <span className="text-xs min-w-[232px] md:min-w-[372px] normal-case group-hover:opacity-100 transition-opacity bg-slate-900 p-2 text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 translate-y-2 opacity-0 m-4 mx-auto">
+                        Approves the Emerald Trust to transfer the token when
+                        another address executes the purchase order.
+                      </span>
+                    </div>
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Listed
@@ -429,31 +443,27 @@ export default function MyNFTs() {
                       >
                         <th className="px-6 py-4">{tokenId}</th>
 
-                        <td
-                          scope="row"
-                          className="flex items-center px-6 py-4 whitespace-nowrap text-white"
-                        >
-                          <Image
-                            className="w-10 h-10 rounded-full border-solid border border-slate-600 bg-gray-700"
-                            width={172}
-                            height={172}
-                            src={metadata?.image}
-                            alt={`Picture of your NFT ${
-                              title || "default title"
-                            }`}
-                          />
-                          <div className="pl-3">
-                            <div className="text-base font-semibold truncate max-w-[200px]">
-                              {title}
+                        <td scope="row">
+                          <Link
+                            className="flex items-center px-6 py-4 whitespace-nowrap text-white"
+                            href={`/emerald-nft/${tokenId}`}
+                            target="_blank"
+                          >
+                            <Image
+                              className="w-10 h-10 rounded-full border-solid border border-slate-600 bg-gray-700"
+                              width={172}
+                              height={172}
+                              src={metadata?.image}
+                              alt={`Picture of your NFT ${
+                                title || "default title"
+                              }`}
+                            />
+                            <div className="pl-3">
+                              <div className="text-base font-semibold truncate max-w-[200px]">
+                                {title}
+                              </div>
                             </div>
-                            {/* <Link
-                              href={`https://mumbai.polygonscan.com/tx/${mintHash}`}
-                              className="font-normal text-gray-400 hover:text-white"
-                              target="_blank"
-                            >
-                              {formatMidDotsAddr(mintHash)}
-                            </Link> */}
-                          </div>
+                          </Link>
                         </td>
 
                         <td className="px-6 py-4">
@@ -463,6 +473,11 @@ export default function MyNFTs() {
                         <td className="px-6 py-4">
                           <label className="relative inline-flex items-center cursor-pointer">
                             <input
+                              disabled={
+                                isLoadingApprove ||
+                                isLoadingCancel ||
+                                isLoadingListing
+                              }
                               type="checkbox"
                               value={isApproved}
                               checked={isApproved}
@@ -484,7 +499,11 @@ export default function MyNFTs() {
                         <td className="px-6 py-4">
                           <label className="relative inline-flex items-center cursor-pointer">
                             <input
-                              // disabled={!isApproved}
+                              disabled={
+                                isLoadingApprove ||
+                                isLoadingCancel ||
+                                isLoadingListing
+                              }
                               type="checkbox"
                               value={isListed}
                               checked={isListed}
