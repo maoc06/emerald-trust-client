@@ -40,7 +40,8 @@ export default function Marketplace({ ...props }) {
         });
 
         if (props.isConnect) {
-          isOwner = await verifyNftOwnership();
+          isOwner = await verifyNftOwnership(tokenId);
+          console.log(`Token #${tokenId} is ownership? ${isOwner}`);
           if (!isOwner) nftListedMetadata[tokenId] = resNft;
         } else {
           nftListedMetadata[tokenId] = resNft;
@@ -63,11 +64,19 @@ export default function Marketplace({ ...props }) {
     setIsLoadingNFTs(false);
   };
 
-  const verifyNftOwnership = async () => {
-    let isOwnerShip = await fetch(
-      `/api/verifyNftOwnership/${props.connectUser}`
+  const verifyNftOwnership = async (tokenId) => {
+    // let isOwnerShip = await fetch(
+    //   `/api/verifyNftOwnership/${props.connectUser}`
+    // );
+    // return isOwnerShip.json();
+    let mainOwner = await fetch(`/api/getOwnersForNft/${tokenId}`);
+    mainOwner = await mainOwner.json();
+    mainOwner = mainOwner.owners[0];
+
+    return (
+      String(mainOwner).toLowerCase() ===
+      String(props.connectUser).toLowerCase()
     );
-    return isOwnerShip.json();
   };
 
   useEffect(() => {

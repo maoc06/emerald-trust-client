@@ -3,6 +3,8 @@ import { alchemy, contractNftAddr } from "../client";
 export default function handler(req, res) {
   const { address: owner } = req.query;
 
+  console.log("params:", { owner, contractNftAddr });
+
   return new Promise((resolve, reject) => {
     alchemy.nft
       .verifyNftOwnership(owner, contractNftAddr)
