@@ -33,14 +33,6 @@ export default function EmeraldNFT({ ...props }) {
 
   const debouncedNftPrice = useDebounce(nft.currPrice, 500);
 
-  // READ NFT LISTED by TOKEN-ID
-  const { data: nftListed, isError: isErrorNftListed } = useContractRead({
-    address: addressNFTMarket,
-    abi: abiNFTMarket,
-    functionName: "getListing",
-    args: [router.query.slug],
-  });
-
   // BUY NFT PREPARE WRITE
   const { config, isError: isErrorToBuy } = usePrepareContractWrite({
     address: addressNFTMarket,
@@ -98,6 +90,10 @@ export default function EmeraldNFT({ ...props }) {
       blockData = await fetch(`/api/getBlock/${blockNumber}`);
       blockData = await blockData.json();
 
+      if (String(resTransfers[index].from).startsWith("0x000000")) {
+        setMintHash(resTransfers[index].transactionHash);
+      }
+
       _transfers.push({
         blockNumber: blockNumber,
         from: resTransfers[index].from,
@@ -109,29 +105,6 @@ export default function EmeraldNFT({ ...props }) {
     }
 
     setTransfers(_transfers);
-
-    // let transfersPromise = new Promise((resolve, reject) => {
-    //   resTransfers.forEach(async (transfer, index) => {
-    //     const { blockNumber } = transfer;
-    //     let blockData = await fetch(`/api/getBlock/${blockNumber}`);
-    //     blockData = await blockData.json();
-
-    //     _transfers.push({
-    //       blockNumber: blockNumber,
-    //       from: resTransfers[index].from,
-    //       to: resTransfers[index].to,
-    //       tokenId: resTransfers[index].tokenId,
-    //       transactionHash: resTransfers[index].transactionHash,
-    //       timestamp: blockData.timestamp,
-    //     });
-
-    //     if (index === resTransfers.length - 1) resolve();
-    //   });
-    // });
-
-    // transfersPromise.then(() => {
-    //   setTransfers(_transfers);
-    // });
   };
 
   const getOwnerNFT = async () => {
@@ -148,9 +121,31 @@ export default function EmeraldNFT({ ...props }) {
     return formatEther(balance);
   };
 
+  const verifyNftOwnership = async () => {
+    let isOwnerShip = await fetch(
+      `/api/verifyNftOwnership/${props.connectUser}`
+    );
+    return isOwnerShip.json();
+  };
+
   const handleBuyNFT = async () => {
     if (!props.isConnect) {
       toast.warn("Connect your Web3 Wallet to buy the NFT!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    const isOwner = await verifyNftOwnership();
+    if (isOwner) {
+      toast.info("You already own this NFT! 😅", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -206,10 +201,6 @@ export default function EmeraldNFT({ ...props }) {
       getTransfers();
     }
   }, [router.isReady]);
-
-  useEffect(() => {
-    if (!isErrorNftListed && nftListed) setMintHash(nftListed.txHash);
-  }, [isErrorNftListed, nftListed]);
 
   return (
     // <div className="flex flex-col gap-8 p-6 lg:px-8 overflow-auto bg-slate-800">
@@ -359,7 +350,10 @@ export default function EmeraldNFT({ ...props }) {
 
           <div className="block max-w p-6 mt-4 bg-slate-900 border border-gray-800 rounded-lg">
             <p className="text-lg">
-              Price: <span className="font-bold text-xl">{nft.currPrice}</span>{" "}
+              Price:{" "}
+              <span className="font-bold text-xl">
+                {nft.currPrice === 0 ? nft.rawMetadata?.price : nft.currPrice}
+              </span>{" "}
               <span className="font-bold">MATIC</span>
             </p>
 

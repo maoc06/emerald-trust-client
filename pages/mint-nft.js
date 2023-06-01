@@ -25,8 +25,7 @@ export default function MintNft() {
 
   const [showMintOverlay, setShowMintOverlay] = useState(false);
   const [showSuccessMintOverlay, setShowSuccessMintOverlay] = useState(false);
-  // const [showApproveMsg, setShowApproveMsg] = useState(false);
-  const [isTokenMined, setIsTokenMined] = useState(false);
+  // const [isTokenMined, setIsTokenMined] = useState(false);
 
   const [formParams, updateFormParams] = useState({
     name: "",
@@ -35,27 +34,12 @@ export default function MintNft() {
   });
   const [file, setFile] = useState();
   const [nftMetadataURL, setNftMetadataURL] = useState("none");
-  const [mintTokenId, setMintTokenId] = useState("");
-  const [txHash, setTxHash] = useState("");
+  // const [mintTokenId, setMintTokenId] = useState("");
+  // const [txHash, setTxHash] = useState("");
 
   const debouncedMetadata = useDebounce(nftMetadataURL, 500);
-  const debouncedMintTokenId = useDebounce(mintTokenId, 500);
-  const debouncedTxHash = useDebounce(txHash, 500);
-
-  // APPROVE TO LIST PREPARE WRITE
-  // const { config: configApproveToList, isError: isErrorApprove } =
-  //   usePrepareContractWrite({
-  //     address: addressNFT,
-  //     abi: abiNFT,
-  //     functionName: "approve",
-  //     args: [addressNFTMarket, debouncedMintTokenId],
-  //     enabled: Boolean(debouncedMintTokenId),
-  //   });
-  // const { write: approveNFT, data: approveTx } =
-  //   useContractWrite(configApproveToList);
-  // const { isSuccess: isSuccessApprove } = useWaitForTransaction({
-  //   hash: approveTx?.hash,
-  // });
+  // const debouncedMintTokenId = useDebounce(mintTokenId, 500);
+  // const debouncedTxHash = useDebounce(txHash, 500);
 
   // MINT NFT PREPARE WRITE
   const { config, isError: isErrorMint } = usePrepareContractWrite({
@@ -72,30 +56,30 @@ export default function MintNft() {
     });
 
   // UPDATE TX HASH
-  const { config: configTxHash, isError: isErrorTxHash } =
-    usePrepareContractWrite({
-      address: addressNFTMarket,
-      abi: abiNFTMarket,
-      functionName: "updateMintHash",
-      args: [addressNFT, debouncedMintTokenId, debouncedTxHash],
-      enabled: Boolean(debouncedMintTokenId && debouncedTxHash),
-    });
-  const { write: updateMintHash, data: updatedTxHash } =
-    useContractWrite(configTxHash);
-  const { isSuccess: isSuccessUpdateHash } = useWaitForTransaction({
-    hash: updatedTxHash?.hash,
-  });
+  // const { config: configTxHash, isError: isErrorTxHash } =
+  //   usePrepareContractWrite({
+  //     address: addressNFTMarket,
+  //     abi: abiNFTMarket,
+  //     functionName: "updateMintHash",
+  //     args: [addressNFT, debouncedMintTokenId, debouncedTxHash],
+  //     enabled: Boolean(debouncedMintTokenId && debouncedTxHash),
+  //   });
+  // const { write: updateMintHash, data: updatedTxHash } =
+  //   useContractWrite(configTxHash);
+  // const { isSuccess: isSuccessUpdateHash } = useWaitForTransaction({
+  //   hash: updatedTxHash?.hash,
+  // });
 
   // MINT TRANSFER EVENT LISTENER (approve to list)
-  useContractEvent({
-    address: addressNFT,
-    abi: abiNFT,
-    eventName: "Transfer",
-    listener(data) {
-      const tokenId = parseInt(data[0].topics[3], 16);
-      setMintTokenId(tokenId);
-    },
-  });
+  // useContractEvent({
+  //   address: addressNFT,
+  //   abi: abiNFT,
+  //   eventName: "Transfer",
+  //   listener(data) {
+  //     const tokenId = parseInt(data[0].topics[3], 16);
+  //     setMintTokenId(tokenId);
+  //   },
+  // });
 
   const uploadMetadataToIPFS = async (imageIpfsUrl) => {
     const { name, description, price } = formParams;
@@ -164,7 +148,7 @@ export default function MintNft() {
       const metadataURL = new URL(debouncedMetadata);
       if (metadataURL.hostname === process.env.pinataHostname) {
         mintEmeraldNft(); // finally, mint NFT with generated metadata
-        setIsTokenMined(true);
+        // setIsTokenMined(true);
       }
     }
   }, [isErrorMint, debouncedMetadata, mintEmeraldNft]);
@@ -182,31 +166,39 @@ export default function MintNft() {
   // }, [isErrorApprove, debouncedMintTokenId, approveNFT]);
 
   useEffect(() => {
-    if (isSuccessMint && isSuccessUpdateHash) {
+    if (isSuccessMint) {
       setShowMintOverlay(false);
       setShowSuccessMintOverlay(true);
     }
-  }, [isSuccessMint, isSuccessUpdateHash]);
+  }, [isSuccessMint]);
 
-  useEffect(() => {
-    if (emeraldNft?.hash && debouncedMintTokenId) {
-      setTxHash(emeraldNft.hash);
-      // console.log("1. HASH:", emeraldNft.hash);
-    }
-  }, [emeraldNft, debouncedMintTokenId]);
+  // PREV UP CODE
+  // useEffect(() => {
+  //   if (isSuccessMint && isSuccessUpdateHash) {
+  //     setShowMintOverlay(false);
+  //     setShowSuccessMintOverlay(true);
+  //   }
+  // }, [isSuccessMint, isSuccessUpdateHash]);
 
-  useEffect(() => {
-    if (
-      isTokenMined &&
-      !isErrorTxHash &&
-      debouncedTxHash &&
-      debouncedMintTokenId &&
-      typeof updateMintHash === "function"
-    ) {
-      updateMintHash();
-      // console.log("2. HASH:", debouncedTxHash);
-    }
-  }, [isTokenMined, debouncedTxHash, debouncedMintTokenId, updateMintHash]);
+  // useEffect(() => {
+  //   if (emeraldNft?.hash && debouncedMintTokenId) {
+  //     setTxHash(emeraldNft.hash);
+  //     // console.log("1. HASH:", emeraldNft.hash);
+  //   }
+  // }, [emeraldNft, debouncedMintTokenId]);
+
+  // useEffect(() => {
+  //   if (
+  //     isTokenMined &&
+  //     !isErrorTxHash &&
+  //     debouncedTxHash &&
+  //     debouncedMintTokenId &&
+  //     typeof updateMintHash === "function"
+  //   ) {
+  //     updateMintHash();
+  //     // console.log("2. HASH:", debouncedTxHash);
+  //   }
+  // }, [isTokenMined, debouncedTxHash, debouncedMintTokenId, updateMintHash]);
 
   return (
     <div className="w-full flex justify-center items-center max-w-[1280px]">

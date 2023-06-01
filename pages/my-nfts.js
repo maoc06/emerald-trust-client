@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,7 +18,6 @@ import {
   addressNFTMarket,
   abiNFT,
 } from "../contracts";
-import { formatMidDotsAddr } from "../utils/formatAddress";
 import { ModalEditToken } from "../components";
 
 export default function MyNFTs() {
@@ -100,6 +98,7 @@ export default function MyNFTs() {
     let resNfts = await fetch(`/api/getNftsForOwner/${ownerAddr}`);
 
     resNfts = await resNfts.json();
+    // console.log("resNfts:", resNfts);
     resNfts = resNfts?.ownedNfts || [];
 
     resNfts.forEach((myNft) => {
@@ -133,7 +132,7 @@ export default function MyNFTs() {
           prevTokenId = parseInt(result.tokenId, "16");
           if (prevTokenId > 0) {
             auxMyNft[prevTokenId]["isListed"] = result.currentlyListed;
-            auxMyNft[prevTokenId]["mintHash"] = result.txHash;
+            // auxMyNft[prevTokenId]["mintHash"] = result.txHash;
             auxMyNft[prevTokenId]["currPrice"] = formatEther(result.price);
           }
         } else if (typeof result === "boolean" && prevTokenId > 0) {
@@ -187,6 +186,33 @@ export default function MyNFTs() {
     listNft
       ? setTokenToList({ ...tokenToList, tokenId, price })
       : setTokenToUnlist(tokenId);
+  };
+
+  const handleEditToken = ({ tokenId, price, isListed }) => {
+    if (!isListed) {
+      toast.error(`It is not possible to edit the token if it is not listed!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    setOpenEditModal(true);
+    setTokenToList({ tokenId, price });
+  };
+
+  const handleGetTokenPrice = (currPrice, metadata) => {
+    if (currPrice == 0 || currPrice == undefined) {
+      return metadata?.price;
+    }
+
+    return currPrice;
   };
 
   const changeIsListedUI = (tokenId, status, property = "isListed") => {
@@ -292,6 +318,8 @@ export default function MyNFTs() {
         visible={openEditModal}
         setVisible={setOpenEditModal}
         token={tokenToList}
+        items={myNfts}
+        setItems={setMyNfts}
       />
 
       {isLoading && (
@@ -343,19 +371,6 @@ export default function MyNFTs() {
             </div>
           </div>
 
-          {Object.keys(myNfts).length === 0 && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pl-6 py-4 text-center text-lg">
-              <p className="text-red-400">You do not have NFT yet.</p>
-
-              <button
-                onClick={() => router.push("/mint-nft")}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-6 rounded-xl my-4"
-              >
-                Mine your NFT NOW
-              </button>
-            </div>
-          )}
-
           <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-400 overflow-auto">
               <thead className="text-xs uppercase bg-gray-700 text-gray-400">
@@ -382,6 +397,19 @@ export default function MyNFTs() {
               </thead>
 
               <tbody>
+                {Object.keys(myNfts).length === 0 && (
+                  <tr className="col-span-6 text-center text-lg">
+                    <td className="m-auto py-4">
+                      <p className="text-red-400">You do not have NFT yet.</p>
+                      <button
+                        onClick={() => router.push("/mint-nft")}
+                        className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-6 rounded-xl my-4"
+                      >
+                        Mine your NFT NOW
+                      </button>
+                    </td>
+                  </tr>
+                )}
                 {Object.keys(myNfts).length > 0 &&
                   Object.keys(myNfts).map((myNftKey) => {
                     const {
@@ -391,7 +419,7 @@ export default function MyNFTs() {
                       title,
                       isApproved,
                       isListed,
-                      mintHash,
+                      // mintHash,
                     } = myNfts[myNftKey];
 
                     return (
@@ -418,18 +446,18 @@ export default function MyNFTs() {
                             <div className="text-base font-semibold truncate max-w-[200px]">
                               {title}
                             </div>
-                            <Link
+                            {/* <Link
                               href={`https://mumbai.polygonscan.com/tx/${mintHash}`}
                               className="font-normal text-gray-400 hover:text-white"
                               target="_blank"
                             >
                               {formatMidDotsAddr(mintHash)}
-                            </Link>
+                            </Link> */}
                           </div>
                         </td>
 
                         <td className="px-6 py-4">
-                          {currPrice || "0.00"} MATIC
+                          {handleGetTokenPrice(currPrice, metadata)} MATIC
                         </td>
 
                         <td className="px-6 py-4">
@@ -464,15 +492,15 @@ export default function MyNFTs() {
                               onChange={(e) =>
                                 handleToggleListNFT(e, {
                                   tokenId: tokenId,
-                                  price: currPrice,
+                                  price: handleGetTokenPrice(
+                                    currPrice,
+                                    metadata
+                                  ),
                                   isApproved: isApproved,
                                 })
                               }
                             />
                             <div className="w-11 h-6 bg-slate-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-slate-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
-                            {/* <span className="ml-3 text-sm font-medium text-gray-300">
-                          {isListed ? "NFT Listed" : "NFT Unlisted"}
-                        </span> */}
                           </label>
                         </td>
 
@@ -480,10 +508,10 @@ export default function MyNFTs() {
                           <div
                             className="font-medium text-emerald-600 hover:underline"
                             onClick={(e) => {
-                              setOpenEditModal(true);
-                              setTokenToList({
+                              handleEditToken({
                                 tokenId: tokenId,
-                                price: currPrice,
+                                price: handleGetTokenPrice(currPrice, metadata),
+                                isListed: isListed,
                               });
                             }}
                           >

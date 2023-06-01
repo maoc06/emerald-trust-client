@@ -51,9 +51,25 @@ export default function Proceed() {
 
   const getTransfers = async () => {
     setIsLoading(true);
+    let _transfers = [];
+    let blockNumber, blockData;
     let resTransfers = await fetch(`/api/getTransfersForOwner/${ownerAddr}`);
     resTransfers = await resTransfers.json();
-    setTransfers(resTransfers);
+
+    for (let index = 0; index < resTransfers.length; index++) {
+      blockNumber = resTransfers[index].blockNumber;
+      blockData = await fetch(`/api/getBlock/${blockNumber}`);
+      blockData = await blockData.json();
+      _transfers.push({
+        transactionHash: resTransfers[index].transactionHash,
+        title: resTransfers[index].title,
+        buyer: resTransfers[index].to,
+        price: formatEther(fromHex(resTransfers[index].value, "number")),
+        timestamp: blockData.timestamp,
+      });
+    }
+
+    setTransfers(_transfers);
     setIsLoading(false);
   };
 
@@ -114,7 +130,7 @@ export default function Proceed() {
             <div className="w-full flex flex-col-reverse gap-6 lg:flex-row lg:justify-between">
               <div className="flex-1 relative overflow-x-auto rounded-lg">
                 <table className="w-full text-sm text-left text-gray-300 rounded-lg overflow-hidden">
-                  <caption class="p-5 text-lg font-semibold text-left text-white bg-slate-900">
+                  <caption className="p-5 text-lg font-semibold text-left text-white bg-slate-900">
                     Your sales history
                   </caption>
                   <thead className="text-xs  uppercase bg-slate-600 text-gray-300">
@@ -160,18 +176,18 @@ export default function Proceed() {
                         <td className="px-6 py-4">
                           <Link
                             className="text-emerald-500 hover:text-emerald-300"
-                            href={`https://mumbai.polygonscan.com/address/${transfer.to}`}
+                            href={`https://mumbai.polygonscan.com/address/${transfer.buyer}`}
                             target="_blank"
                           >
-                            {formatEndDotsAddr(transfer.to)}
+                            {formatEndDotsAddr(transfer.buyer)}
                           </Link>
                         </td>
                         <td className="px-6 py-4">
-                          {formatEther(fromHex(transfer.value, "number"))}{" "}
+                          {transfer.price}{" "}
                           <span className="text-xs">MATIC</span>
                         </td>
                         <td className="px-6 py-4 min-w-fit">
-                          {formatTxDate(transfer.timeLastUpdated)}
+                          {formatTxDate(transfer.timestamp, true)}
                         </td>
                       </tr>
                     ))}
@@ -179,7 +195,7 @@ export default function Proceed() {
                 </table>
               </div>
 
-              <div className="flex flex-col md:max-w-xl text-white p-6 bg-slate-900 border border-gray-800 rounded-lg max-h-[270px]">
+              <div className="flex flex-col  text-white p-6 bg-slate-900 border border-gray-800 rounded-lg max-h-[270px] md:max-w-[50%]">
                 <div>
                   <span className="tracking-wide text-gray-300 text-xs font-bold">
                     Available proceeds

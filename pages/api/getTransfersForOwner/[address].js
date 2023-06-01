@@ -6,6 +6,11 @@ export default function handler(req, res) {
   return new Promise((resolve, reject) => {
     getTransactionRaw(owner)
       .then((transactions) => {
+        if (transactions.nfts.length === 0) {
+          res.status(200).json([]);
+          resolve();
+        }
+
         getTransactionData(transactions.nfts)
           .then((transfers) => {
             res.status(200).json(transfers);

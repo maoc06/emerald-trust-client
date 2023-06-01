@@ -4,6 +4,7 @@ import {
   UsersIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 export default function Home({ ...props }) {
   return (
@@ -11,9 +12,18 @@ export default function Home({ ...props }) {
       {/* HERO SECTION */}
       <section className="bg-slate-800 z-20">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <img
+          <Image
+            width={1500}
+            height={1500}
+            src="/hero-home-mobile.png"
+            className="block md:hidden absolute inset-0 h-screen w-full object-cover"
+          />
+
+          <Image
+            width={1500}
+            height={1500}
             src="/hero-home.png"
-            className="absolute inset-0 h-screen w-full object-cover"
+            className="hidden md:block absolute inset-0 h-screen w-full object-cover"
           />
 
           <div className="mr-auto place-self-center lg:col-span-7 z-10">

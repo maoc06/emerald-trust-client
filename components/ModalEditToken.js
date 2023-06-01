@@ -14,6 +14,8 @@ export default function ModalEditToken({
   visible = false,
   setVisible = () => {},
   token,
+  items,
+  setItems = () => {},
 }) {
   const [formParams, updateFormParams] = useState({
     price: token.price,
@@ -41,7 +43,7 @@ export default function ModalEditToken({
     const { price } = formParams;
 
     if (!price || !token.tokenId) {
-      toast.error(`Tan error occurred while trying to update token! 😥`, {
+      toast.error(`An error occurred while trying to update token! 😥`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -54,8 +56,15 @@ export default function ModalEditToken({
       return;
     }
 
-    // console.log("NEW PRICE:", price);
     setNewPrice(price);
+  };
+
+  const updateItemState = () => {
+    const tmpItems = { ...items };
+    let itemUpdate = tmpItems[token.tokenId];
+    itemUpdate["currPrice"] = debouncedNewPrice;
+    tmpItems[token.tokenId] = itemUpdate;
+    setItems(tmpItems);
   };
 
   useEffect(() => {
@@ -77,6 +86,10 @@ export default function ModalEditToken({
         theme: "dark",
       });
 
+      // update local items state
+      updateItemState();
+
+      // reset local values
       setVisible(false);
       updateFormParams({ price: "" });
       setNewPrice("");

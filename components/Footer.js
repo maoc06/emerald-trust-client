@@ -53,7 +53,7 @@ export default function Footer() {
                 <li className="mb-4">
                   <Link
                     target="_blank"
-                    href="https://github.com/maoc06"
+                    href="https://github.com/maoc06/emerald-trust-client"
                     className="hover:underline "
                   >
                     Github
