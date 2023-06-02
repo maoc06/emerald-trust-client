@@ -59,9 +59,8 @@ function MyApp({ Component, pageProps }) {
 
       <WagmiConfig config={wagmiConfig}>
         <div className="bg-slate-800 min-h-screen flex flex-col justify-between">
-          <Header isConnect={isAuthWallet} />
+          <Header />
 
-          {/* min-h-[calc(100vh-80px)] */}
           <div className="relative flex justify-center max-w-full p-6 lg:px-8 h-fit overflow-x-hidden">
             <RouteGuard isConnect={isAuthWallet}>
               <Component

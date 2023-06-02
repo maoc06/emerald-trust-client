@@ -12,18 +12,20 @@ export default function Home({ ...props }) {
       {/* HERO SECTION */}
       <section className="bg-slate-800 z-20">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <Image
-            width={1500}
-            height={1500}
+          <img
+            // width={500}
+            // height={500}
             src="/hero-home-mobile.png"
             className="block md:hidden absolute inset-0 h-screen w-full object-cover"
+            alt="hero home"
           />
 
-          <Image
-            width={1500}
-            height={1500}
+          <img
+            // width={500}
+            // height={500}
             src="/hero-home.png"
             className="hidden md:block absolute inset-0 h-screen w-full object-cover"
+            alt="hero home"
           />
 
           <div className="mr-auto place-self-center lg:col-span-7 z-10">
@@ -62,9 +64,6 @@ export default function Home({ ...props }) {
               Explore Us
             </Link>
           </div>
-          {/* <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <Image width={520} height={390} src="/hero-home.png" alt="mockup" />
-          </div> */}
         </div>
       </section>
 
@@ -121,26 +120,6 @@ export default function Home({ ...props }) {
           </div>
         </div>
       </section>
-
-      {/* SOCIAL PROFF SECTION */}
-      {/* <section className="bg-slate-800 my-8">
-        <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
-          <dl className="grid max-w-screen-md gap-8 mx-auto sm:grid-cols-3 text-white">
-            <div className="flex flex-col items-center justify-center">
-              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">73M+</dt>
-              <dd className="font-light text-gray-400">developers</dd>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">1B+</dt>
-              <dd className="font-light text-gray-400">contributors</dd>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">4M+</dt>
-              <dd className="font-light text-gray-400">organizations</dd>
-            </div>
-          </dl>
-        </div>
-      </section> */}
 
       {/* CTA SECTION */}
       <section className=" bg-slate-800">

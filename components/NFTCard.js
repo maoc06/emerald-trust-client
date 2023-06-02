@@ -16,10 +16,12 @@ export default function NFTCard({
       <div className="max-w-xs max-h-96 overflow-hidden border rounded-2xl shadow bg-slate-900 border-gray-800 cursor-pointer transform transition duration-300 hover:scale-105">
         <div className="relative w-full h-64 max-h-64 bg-gray-700 rounded-t-xl overflow-hidden">
           <Image
-            className="w-full object-cover"
             src={image}
             alt={`Picture of ${title}`}
-            fill={true}
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full h-auto"
           />
         </div>
 
@@ -30,7 +32,7 @@ export default function NFTCard({
 
           <div className="flex justify-between items-center">
             <div className="flex mr-8">
-              <Image src={maticIcon} width={32} height={32} alt={`Ethereum`} />
+              <Image src={maticIcon} width="32" height="32" alt={`Matic`} />
               <p className="text-white text-xl font-bold">
                 {/* <span className="font-bold">Price: </span> */}
                 {price} <span className="text-sm">MATIC</span>

@@ -25,6 +25,8 @@ export default function Marketplace({ ...props }) {
     let multiCallConfig = [];
     let tokenId, resNft, isOwner, nftDataStorage;
 
+    console.log("1)", nfts);
+
     for (let index = 0; index < nfts.length; index++) {
       tokenId = parseInt(nfts[index].tokenId, 16);
       if (tokenId > 0) {
@@ -41,7 +43,7 @@ export default function Marketplace({ ...props }) {
 
         if (props.isConnect) {
           isOwner = await verifyNftOwnership(tokenId);
-          console.log(`Token #${tokenId} is ownership? ${isOwner}`);
+          // console.log(`Token #${tokenId} is ownership? ${isOwner}`);
           if (!isOwner) nftListedMetadata[tokenId] = resNft;
         } else {
           nftListedMetadata[tokenId] = resNft;
@@ -59,6 +61,8 @@ export default function Marketplace({ ...props }) {
         }
       }
     }
+
+    console.log("2)", nftListedMetadata);
 
     setNfts(nftListedMetadata);
     setIsLoadingNFTs(false);

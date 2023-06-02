@@ -1,12 +1,19 @@
+import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Web3Button } from "@web3modal/react";
-import Link from "next/link";
-import Image from "next/image";
+import { useAccount } from "wagmi";
 
-export default function Header({ isConnect = false }) {
+export default function Header() {
+  const { isConnected } = useAccount();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAuthNav, setShowAuthNav] = useState(false);
+
+  useEffect(() => {
+    setShowAuthNav(isConnected);
+  }, [isConnected]);
 
   return (
     <header className="sticky top-0 z-40 bg-slate-800">
@@ -61,7 +68,7 @@ export default function Header({ isConnect = false }) {
             Mint NFT
           </Link>
 
-          {isConnect && (
+          {showAuthNav && (
             <Link
               href="/my-nfts"
               className="text-sm font-semibold leading-6 text-white"
@@ -70,7 +77,7 @@ export default function Header({ isConnect = false }) {
             </Link>
           )}
 
-          {isConnect && (
+          {showAuthNav && (
             <Link
               href="/proceed"
               className="text-sm font-semibold leading-6 text-white"
@@ -120,43 +127,38 @@ export default function Header({ isConnect = false }) {
               <div className="space-y-2 py-6">
                 <Link
                   href="/explore-us"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-slate-900"
+                  className="text-sm font-semibold leading-6 text-white"
                 >
                   Explore
                 </Link>
 
                 <Link
-                  onClick={() => setMobileMenuOpen(false)}
                   href="/marketplace"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-slate-900"
+                  className="text-sm font-semibold leading-6 text-white"
                 >
                   Marketplace
                 </Link>
 
                 <Link
-                  onClick={() => setMobileMenuOpen(false)}
                   href="/mint-nft"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-slate-900"
+                  className="text-sm font-semibold leading-6 text-white"
                 >
-                  Mint My NFT
+                  Mint NFT
                 </Link>
 
-                {isConnect && (
+                {showAuthNav && (
                   <Link
-                    onClick={() => setMobileMenuOpen(false)}
                     href="/my-nfts"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-slate-900"
+                    className="text-sm font-semibold leading-6 text-white"
                   >
                     Manage My NFTs
                   </Link>
                 )}
 
-                {isConnect && (
+                {showAuthNav && (
                   <Link
-                    onClick={() => setMobileMenuOpen(false)}
                     href="/proceed"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-slate-900"
+                    className="text-sm font-semibold leading-6 text-white"
                   >
                     Withdraw
                   </Link>
