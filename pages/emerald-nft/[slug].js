@@ -429,7 +429,7 @@ export default function EmeraldNFT({ ...props }) {
 
       {/* Transaction history */}
       <div className="md:p-6 md:px-1 lg:px-8 my-6">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="relative overflow-x-auto shadow-md rounded-lg">
           <table className="table-auto w-full text-sm text-left text-gray-300 shadow-md">
             <caption className="p-5 text-lg font-semibold text-left text-white bg-slate-900">
               Transaction history
@@ -490,7 +490,7 @@ export default function EmeraldNFT({ ...props }) {
                     <td className="px-6 py-4">
                       {formatTxDate(timestamp, true)}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="min-w-[132px] px-6 py-4">
                       {from.toString().startsWith("0x000000") ? (
                         <p className="inline bg-emerald-600 text-emerald-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                           Mint NFT

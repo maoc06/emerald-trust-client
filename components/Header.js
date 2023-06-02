@@ -124,8 +124,9 @@ export default function Header() {
 
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-slate-400">
-              <div className="space-y-2 py-6">
+              <div className="flex flex-col space-y-2 py-6">
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/explore-us"
                   className="text-sm font-semibold leading-6 text-white"
                 >
@@ -133,6 +134,7 @@ export default function Header() {
                 </Link>
 
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/marketplace"
                   className="text-sm font-semibold leading-6 text-white"
                 >
@@ -140,6 +142,7 @@ export default function Header() {
                 </Link>
 
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/mint-nft"
                   className="text-sm font-semibold leading-6 text-white"
                 >
@@ -148,6 +151,7 @@ export default function Header() {
 
                 {showAuthNav && (
                   <Link
+                    onClick={() => setMobileMenuOpen(false)}
                     href="/my-nfts"
                     className="text-sm font-semibold leading-6 text-white"
                   >
@@ -157,6 +161,7 @@ export default function Header() {
 
                 {showAuthNav && (
                   <Link
+                    onClick={() => setMobileMenuOpen(false)}
                     href="/proceed"
                     className="text-sm font-semibold leading-6 text-white"
                   >

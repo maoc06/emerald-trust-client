@@ -186,7 +186,7 @@ export default function Proceed() {
                           {transfer.price}{" "}
                           <span className="text-xs">MATIC</span>
                         </td>
-                        <td className="px-6 py-4 min-w-fit">
+                        <td className="px-6 py-4 min-w-[200px]">
                           {formatTxDate(transfer.timestamp, true)}
                         </td>
                       </tr>
