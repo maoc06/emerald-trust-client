@@ -40,7 +40,7 @@ export default function Home({ ...props }) {
 
             <button
               onClick={props.openWeb3Modal}
-              className="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl mr-3 cursor-pointer"
+              className="mb-2 sm:mb-0 inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl mr-3 cursor-pointer"
             >
               Get started{" "}
               <svg
@@ -59,7 +59,7 @@ export default function Home({ ...props }) {
 
             <Link
               href="/explore-us"
-              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-800 focus:ring-4 focus:ring-gray-100 text-white cursor-pointer"
+              className="min-w-[148px] inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-800 focus:ring-4 focus:ring-gray-100 text-white cursor-pointer"
             >
               Explore Us
             </Link>
