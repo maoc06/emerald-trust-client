@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function ExploreUs({ ...props }) {
   return (
-    <div className="max-w-[1280px] w-full p-6 lg:px-8 overflow-auto h-full">
+    <div className="max-w-[1280px] w-full md:p-6 lg:px-8 overflow-auto h-full">
       <section>
-        <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+        <div className="py-8 md:px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-white">
             Explore the World of Emerald Trust!
           </h1>
@@ -18,7 +18,7 @@ export default function ExploreUs({ ...props }) {
       </section>
 
       <section>
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+        <div className="py-8 md:px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="max-w-screen-lg sm:text-lg text-gray-400">
             <h2 className="mb-4 text-4xl tracking-tight font-bold text-white">
               Enhanced Transparency
@@ -41,7 +41,7 @@ export default function ExploreUs({ ...props }) {
       </section>
 
       <section>
-        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+        <div className="gap-16 items-center py-8 md:px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
           <div className="font-light sm:text-lg text-gray-400">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-white">
               Secure Transactions
@@ -76,7 +76,7 @@ export default function ExploreUs({ ...props }) {
       </section>
 
       <section>
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+        <div className="py-8 md:px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="max-w-screen-lg sm:text-lg text-gray-400">
             <h2 className="mb-4 text-4xl tracking-tight font-bold text-white">
               Global And Efficient
@@ -102,7 +102,7 @@ export default function ExploreUs({ ...props }) {
       </section>
 
       <section>
-        <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+        <div className="gap-8 items-center py-8 md:px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <Image
             width={1000}
             height={1000}

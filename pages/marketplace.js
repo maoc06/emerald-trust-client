@@ -92,7 +92,7 @@ export default function Marketplace({ ...props }) {
   }, [listedNfts]);
 
   return (
-    <div className="max-w-[1280px] w-full p-6 lg:px-8 overflow-auto h-full">
+    <div className="max-w-[1280px] w-full p-6 lg:px-8 overflow-y-auto overflow-x-hidden h-full">
       {Boolean(isLoading || isLoadingNFTs) && (
         <div className="relative px-10 top-0 left-0 text-white text-center text-xl font-bold flex flex-col justify-center items-center inset-0 z-50 h-full w-full">
           <lottie-player

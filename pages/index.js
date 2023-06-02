@@ -4,14 +4,13 @@ import {
   UsersIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
 
 export default function Home({ ...props }) {
   return (
     <div>
       {/* HERO SECTION */}
       <section className="bg-slate-800 z-20">
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+        <div className="grid max-w-screen-xl md:px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <img
             // width={500}
             // height={500}
@@ -38,38 +37,40 @@ export default function Home({ ...props }) {
               stones meets the power of blockchain technology.
             </p>
 
-            <button
-              onClick={props.openWeb3Modal}
-              className="mb-2 sm:mb-0 inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl mr-3 cursor-pointer"
-            >
-              Get started{" "}
-              <svg
-                className="w-5 h-5 ml-2 -mr-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="max-w-[172px] sm:max-w-none flex flex-col sm:flex-row">
+              <button
+                onClick={props.openWeb3Modal}
+                className="mb-2 sm:mb-0 sm:mr-3 inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl  cursor-pointer"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </button>
+                Get started{" "}
+                <svg
+                  className="w-5 h-5 ml-2 -mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </button>
 
-            <Link
-              href="/explore-us"
-              className="min-w-[148px] inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-800 focus:ring-4 focus:ring-gray-100 text-white cursor-pointer"
-            >
-              Explore Us
-            </Link>
+              <Link
+                href="/explore-us"
+                className="min-w-[148px] inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-800 focus:ring-4 focus:ring-gray-100 text-white cursor-pointer"
+              >
+                Explore Us
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FEATURE SECTION */}
       <section className="bg-slate-800  my-8">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div className="py-8 md:px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="max-w-screen-md mb-8 lg:mb-16">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-white">
               Designed to build confidence
@@ -122,8 +123,8 @@ export default function Home({ ...props }) {
       </section>
 
       {/* CTA SECTION */}
-      <section className=" bg-slate-800">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      <section className="bg-slate-800">
+        <div className="py-8 md: px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white">
               Discover Emerald NFTs Now!
